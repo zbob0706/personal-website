@@ -1,0 +1,422 @@
+<!doctype html>
+<!--
+  Personal website — "minimal" skill from UI67 pack, Japanese-minimal aesthetic
+  Tokens: primary/text #0C0C09, surface #F4F4F1
+  Type: Inter (latin) + Noto Sans SC (CJK) + Inconsolata (labels)
+  Writing: one-line positioning + tech stack + status tag; bullets state completed facts only
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bob — AI Engineer</title>
+<meta name="description" content="Bob's personal website: an AI engineer who independently designs and ships real AI products.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Inconsolata:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0C0C09;
+    --paper:#F7F7F4;
+    --paper2:#FFFFFF;
+    --muted:#6f6e68;
+    --faint:#a9a8a1;
+    --rule:rgba(12,12,9,.14);
+    --shu:#C8401F;
+    --sans:"Inter","Noto Sans SC",-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+    --serif:"Noto Serif SC",serif;
+    --mono:"Inconsolata","Noto Sans SC",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:400;font-size:15px;line-height:2;letter-spacing:.02em;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--ink);color:var(--paper);}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:880px;margin:0 auto;padding:0 28px;}
+
+  .label{font-family:var(--mono);font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);}
+  section.block, header.hero{scroll-margin-top:76px;}
+
+  /* ---------- nav ---------- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(247,247,244,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);}
+  .nav-inner{max-width:1080px;margin:0 auto;padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+  .brand{font-weight:600;letter-spacing:.14em;font-size:15px;display:flex;align-items:center;gap:12px;}
+  .hanko{width:26px;height:26px;background:var(--shu);color:#fff;font-family:var(--serif);font-size:15px;display:inline-flex;align-items:center;justify-content:center;border-radius:3px;line-height:1;}
+  .nav-links{display:flex;gap:36px;font-size:13.5px;letter-spacing:.12em;color:var(--muted);}
+  .nav-links a{transition:color .2s;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a.active{color:var(--ink);}
+  .menu-btn{display:none;background:none;border:1px solid var(--rule);border-radius:4px;color:var(--ink);padding:7px 12px;font-family:var(--mono);font-size:12px;letter-spacing:.2em;cursor:pointer;}
+
+  /* ---------- hero ---------- */
+  .hero{min-height:92vh;display:flex;align-items:center;position:relative;padding:120px 0 80px;}
+  .hero-grid{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center;width:100%;}
+  .hero h1{font-weight:300;font-size:clamp(40px,6.5vw,68px);line-height:1.35;letter-spacing:.02em;margin:28px 0 32px;}
+  .hero-sub{color:var(--muted);max-width:52ch;font-size:15px;}
+  .hero-sub strong{color:var(--ink);font-weight:500;}
+  .v-text{writing-mode:vertical-rl;letter-spacing:.5em;color:var(--faint);font-size:13px;user-select:none;font-family:var(--mono);text-transform:uppercase;}
+  .scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--faint);}
+  .scroll-hint .line{width:1px;height:48px;background:var(--rule);position:relative;overflow:hidden;}
+  .scroll-hint .line::after{content:"";position:absolute;top:-50%;left:0;width:100%;height:50%;background:var(--ink);animation:drop 2.2s ease-in-out infinite;}
+  @keyframes drop{0%{top:-50%}60%,100%{top:110%}}
+  .scroll-hint span{font-family:var(--mono);font-size:10px;letter-spacing:.3em;}
+
+  /* ---------- sections ---------- */
+  section.block{padding:120px 0;border-top:1px solid var(--rule);}
+  .sec-head{display:flex;align-items:baseline;gap:24px;margin-bottom:64px;}
+  .sec-no{font-family:var(--serif);font-size:15px;color:var(--shu);}
+  .sec-title{font-weight:400;font-size:26px;letter-spacing:.22em;}
+  .sec-title small{font-family:var(--mono);font-size:11px;letter-spacing:.28em;color:var(--faint);margin-left:16px;}
+
+  /* ---------- works ---------- */
+  .work-block{border-top:1px solid var(--rule);padding:48px 8px;display:grid;grid-template-columns:88px 1fr;gap:24px;}
+  .work-block:last-child{border-bottom:1px solid var(--rule);}
+  .work-side{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--faint);padding-top:8px;line-height:2.2;}
+  .work-side .live{color:var(--shu);}
+  .work-body h3{font-weight:500;font-size:21px;letter-spacing:.04em;margin-bottom:4px;}
+  .work-body h3 a{border-bottom:1px solid transparent;transition:.2s;}
+  .work-body h3 a:hover{color:var(--shu);border-color:var(--shu);}
+  .status-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--shu);border:1px solid var(--shu);border-radius:100px;padding:3px 14px;margin-left:14px;vertical-align:middle;white-space:nowrap;}
+  .status-tag.dev{color:var(--muted);border-color:var(--rule);}
+  .work-pos{font-size:15px;margin:12px 0 4px;letter-spacing:.02em;}
+  .work-pos strong{font-weight:500;}
+  .work-tags{margin:14px 0 4px;display:flex;gap:10px;flex-wrap:wrap;}
+  .work-tags span{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted);border:1px solid var(--rule);border-radius:100px;padding:3px 12px;}
+  .work-bullets{list-style:none;margin-top:10px;}
+  .work-bullets li{position:relative;padding:7px 0 7px 22px;color:var(--muted);font-size:14px;line-height:1.9;letter-spacing:.01em;}
+  .work-bullets li::before{content:"—";position:absolute;left:0;color:var(--faint);}
+  .work-bullets li b{color:var(--ink);font-weight:500;}
+
+  /* ---------- skills ---------- */
+  .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;}
+  .skill-col h4{font-family:var(--mono);font-size:12px;letter-spacing:.3em;color:var(--muted);font-weight:500;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--rule);text-transform:uppercase;}
+  .skill-col ul{list-style:none;}
+  .skill-col li{padding:8px 0;font-size:14.5px;letter-spacing:.02em;color:var(--ink);}
+  .skill-col li span{color:var(--faint);font-family:var(--mono);font-size:11px;margin-left:10px;letter-spacing:.04em;}
+
+  /* ---------- about ---------- */
+  .about-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:72px;}
+  .about-grid p{color:var(--muted);margin-bottom:1.6em;font-size:15px;}
+  .about-grid p strong{color:var(--ink);font-weight:500;}
+  .facts{border-top:1px solid var(--rule);}
+  .fact{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule);font-size:13.5px;}
+  .fact dt{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--faint);white-space:nowrap;}
+  .fact dd{color:var(--ink);text-align:right;letter-spacing:.04em;}
+
+  /* ---------- contact ---------- */
+  .contact{text-align:center;padding:40px 0 20px;}
+  .contact .cn-sub{font-family:var(--serif);font-size:15px;letter-spacing:.3em;color:var(--faint);margin-bottom:32px;}
+  .mail-big{font-weight:300;font-size:clamp(22px,4vw,36px);letter-spacing:.02em;border-bottom:1px solid var(--ink);padding-bottom:6px;transition:.25s;display:inline-block;}
+  .mail-big:hover{color:var(--shu);border-color:var(--shu);}
+  .contact p{color:var(--muted);margin-top:28px;font-size:14px;}
+
+  footer{border-top:1px solid var(--rule);margin-top:120px;padding:36px 0 48px;}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--faint);}
+
+  /* ---------- work images ---------- */
+  .work-shot{margin:0 0 30px;border:1px solid var(--rule);border-radius:6px;overflow:hidden;cursor:zoom-in;background:var(--paper2);position:relative;}
+  .work-shot img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;transition:transform .6s ease;}
+  .work-shot:hover img{transform:scale(1.03);}
+  .work-shot::after{content:"VIEW";position:absolute;right:14px;bottom:12px;font-family:var(--mono);font-size:10px;letter-spacing:.28em;color:var(--paper);background:rgba(12,12,9,.72);padding:7px 14px;border-radius:100px;opacity:0;transition:opacity .3s;}
+  .work-shot:hover::after{opacity:1;}
+
+  /* ---------- lightbox ---------- */
+  .lightbox{position:fixed;inset:0;z-index:100;background:rgba(12,12,9,.92);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:22px;opacity:0;pointer-events:none;transition:opacity .3s;padding:32px;}
+  .lightbox.open{opacity:1;pointer-events:auto;}
+  .lightbox img{max-width:min(1080px,92vw);max-height:72vh;border-radius:6px;background:#fff;box-shadow:0 24px 80px rgba(0,0,0,.4);}
+  .lb-cap{color:#fff;font-family:var(--mono);font-size:12px;letter-spacing:.22em;}
+  .lb-visit{color:#fff;border:1px solid rgba(255,255,255,.45);border-radius:100px;padding:11px 30px;font-family:var(--mono);font-size:12px;letter-spacing:.24em;transition:.25s;}
+  .lb-visit:hover{background:var(--shu);border-color:var(--shu);}
+  .lb-close{position:absolute;top:22px;right:30px;color:#fff;background:none;border:none;font-size:30px;cursor:pointer;font-family:var(--mono);line-height:1;opacity:.7;transition:.2s;}
+  .lb-close:hover{opacity:1;}
+
+  /* ---------- portrait ---------- */
+  .portrait{margin:0 0 32px;border:1px solid var(--rule);border-radius:6px;background:var(--paper2);aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;}
+  .portrait .hanko.big{width:76px;height:76px;font-size:42px;border-radius:6px;}
+  .portrait figcaption{font-family:var(--mono);font-size:10px;letter-spacing:.32em;color:var(--faint);}
+
+  /* ---------- reveal ---------- */
+  .rv{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease;}
+  .rv.on{opacity:1;transform:none;}
+
+  @media (max-width:760px){
+    .nav-links{display:none;}
+    .menu-btn{display:block;}
+    .nav-links.open{display:flex;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:var(--paper);padding:24px 28px;gap:18px;border-bottom:1px solid var(--rule);}
+    .hero-grid{grid-template-columns:1fr;}
+    .v-text{display:none;}
+    .work-block{grid-template-columns:1fr;gap:12px;}
+    .work-side{padding-top:0;}
+    .skills-grid{grid-template-columns:1fr;gap:36px;}
+    .about-grid{grid-template-columns:1fr;gap:48px;}
+    section.block{padding:88px 0;}
+  }
+  @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none;}html{scroll-behavior:auto;}.scroll-hint .line::after{animation:none;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="brand" href="#top"><span class="hanko">作</span>Bob</a>
+    <div class="nav-links" id="navLinks">
+      <a href="#works">Works</a>
+      <a href="#skills">Skills</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="menu-btn" id="menuBtn">MENU</button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="label rv">Portfolio — 2026</p>
+      <h1 class="rv">Turning AI into<br>products that work.</h1>
+      <p class="hero-sub rv">I'm <strong>Bob</strong>, an AI engineer. I've independently designed and shipped several AI products — an <strong>AI job-matching platform</strong>, an <strong>AI repair diagnosis tool</strong>, and an <strong>in-store robot marketing system</strong>. Real code, real deployments, real users.</p>
+    </div>
+    <div class="v-text rv">Less, but better</div>
+  </div>
+  <div class="scroll-hint"><span>SCROLL</span><div class="line"></div></div>
+</header>
+
+<section class="block" id="works">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="sec-no">一</span>
+      <h2 class="sec-title">Works<small>SELECTED</small></h2>
+    </div>
+
+    <article class="work-block rv">
+      <div class="work-side"><span class="live">● Live</span><br>flowgt.co.nz</div>
+      <div class="work-body">
+        <figure class="work-shot rv" data-title="FlowGT · AI Job-Matching Platform" data-link="https://flowgt.co.nz">
+          <img src="assets/flowgt.jpg" alt="FlowGT project cover illustration">
+        </figure>
+        <h3><a href="https://flowgt.co.nz" target="_blank" rel="noopener">FlowGT · AI Job-Matching Platform</a><span class="status-tag">Live</span></h3>
+        <p class="work-pos"><strong>In one line:</strong> a New Zealand AI job platform I founded and built solo from 0 to 1 — serving a paying member community.</p>
+        <div class="work-tags"><span>JavaScript</span><span>Cloudflare Workers / D1 / Workers AI</span><span>DeepSeek API</span><span>Amazon Lex</span><span>AWS Lambda</span><span>GitHub Actions</span></div>
+        <ul class="work-bullets">
+          <li>Delivered a complete product on a serverless edge stack: <b>35 API endpoints</b> and a 35-table SQLite schema across 26 versioned migrations — zero frameworks, zero build step on the front end.</li>
+          <li>Shipped an LLM job-description analyser (Qwen3-30B, JSON-Schema-constrained output, SHA-256 hash caching) and a CV-review pipeline (DeepSeek, versioned scoring rubric, PII redaction, per-call cost ledger).</li>
+          <li>Designed a quota "fuse" for AI calls — <b>counted before inference, auto-refunded on failure</b> — with tiered daily limits to keep inference spend bounded; a 386-assertion regression suite runs in CI on every push.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="work-block rv">
+      <div class="work-side"><span class="live">● Live</span><br>PB Tech store</div>
+      <div class="work-body">
+        <figure class="work-shot rv" data-title="Bella Pro · Retail Marketing Robot">
+          <img src="assets/bella.jpg" alt="Bella Pro project cover illustration">
+        </figure>
+        <h3>Bella Pro · Retail Marketing Robot<span class="status-tag">Live</span></h3>
+        <p class="work-pos"><strong>In one line:</strong> turned a Bella Pro service robot at a PB Tech store into a marketing and guided-selling terminal, built on the Pudu Cloud OpenAPI.</p>
+        <div class="work-tags"><span>Python</span><span>Playwright</span><span>SQLite</span><span>Pudu Cloud OpenAPI</span><span>C++20</span><span>Claude Code Skill</span></div>
+        <ul class="work-bullets">
+          <li>Built HMAC-SHA1 signed-request SDKs (<b>Python and C++</b>) covering ad management, patrol routes, and map points on the robot cloud API.</li>
+          <li>Scraped live promotions (SKU, price, image, end date) with a real Playwright browser to get past Akamai bot protection.</li>
+          <li>Built a generate → human-review → upload ad pipeline (dry-run by default to prevent misfires); published <b>44</b> scan-to-buy QR-code promo ads and mapped <b>28</b> shelf points; packaged the workflow as a reusable agent skill.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="work-block rv">
+      <div class="work-side">○ In development</div>
+      <div class="work-body">
+        <figure class="work-shot rv" data-title="RepairIQ · AI Repair Diagnosis &amp; Quoting Tool">
+          <img src="assets/repairiq.jpg" alt="RepairIQ project cover illustration">
+        </figure>
+        <h3>RepairIQ · AI Repair Diagnosis &amp; Quoting Tool<span class="status-tag dev">In development</span></h3>
+        <p class="work-pos"><strong>In one line:</strong> an AI diagnosis and quoting tool grounded in real repair cases — describe the fault, get a structured diagnosis and a repair quote.</p>
+        <div class="work-tags"><span>Node.js / Express</span><span>SQLite</span><span>Qwen / OpenAI / Gemini</span><span>RAG</span><span>SSE</span><span>Docker</span></div>
+        <ul class="work-bullets">
+          <li>Scraped and cleaned <b>10,434</b> repair cases from iFixit and Open Repair Data into a SQLite knowledge base.</li>
+          <li>Retrieval-augmented diagnosis pipeline: matched cases feed a chain-of-thought prompt that returns structured JSON (likely causes with probabilities, inspection steps, tools, warnings).</li>
+          <li>Built a provider-agnostic LLM layer (Qwen / OpenAI / Gemini, SSE streaming with automatic fallback); credit billing across five plan tiers (rate limits, quotas, model downgrade, refunds on failure) and a probability-weighted quote engine; 75 automated tests, containerised with Docker.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="work-block rv">
+      <div class="work-side"><span class="live">● Live</span><br>personal tool</div>
+      <div class="work-body">
+        <figure class="work-shot rv" data-title="Resume Studio · AI-Assisted Resume Editor">
+          <img src="assets/resume-editor.jpg" alt="AI Resume Editor project cover illustration">
+        </figure>
+        <h3>Resume Studio · AI-Assisted Resume Editor<span class="status-tag">Live</span></h3>
+        <p class="work-pos"><strong>In one line:</strong> an in-browser resume studio where AI rewrites and polishes each section while the imported template layout stays pixel-identical — then exports print-ready PDFs.</p>
+        <div class="work-tags"><span>JavaScript</span><span>LLM-assisted editing</span><span>PDF export</span><span>Bilingual UI</span></div>
+        <ul class="work-bullets">
+          <li>Two-module workflow — <b>CV first, then cover letter</b> — with section templates, free in-page editing, and AI rewrite at both section and whole-document level.</li>
+          <li>Content-only edits against the user's own imported template: the layout is never touched, only the words improve; one-click export of the CV, the cover letter, or both combined.</li>
+          <li>Bilingual by design: <b>English resume content with Chinese prompts</b> and AI communication, so non-native writers get native-quality output.</li>
+        </ul>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="block" id="skills">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="sec-no">二</span>
+      <h2 class="sec-title">Skills<small>STACK</small></h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-col rv">
+        <h4>AI · LLM</h4>
+        <ul>
+          <li>LLM app development <span>Qwen / OpenAI / Gemini / DeepSeek</span></li>
+          <li>Structured output <span>JSON Schema</span></li>
+          <li>Retrieval augmentation <span>RAG / BM25</span></li>
+          <li>Prompt engineering <span>CoT / cache tuning</span></li>
+          <li>AI cost &amp; quota control <span>fuses / ledgers</span></li>
+        </ul>
+      </div>
+      <div class="skill-col rv">
+        <h4>Engineering</h4>
+        <ul>
+          <li>JavaScript <span>Cloudflare Workers / D1</span></li>
+          <li>Node.js <span>Express / SQLite</span></li>
+          <li>Python <span>Playwright / data pipelines</span></li>
+          <li>REST API design <span>35+ endpoints</span></li>
+          <li>Serverless architecture <span>edge</span></li>
+        </ul>
+      </div>
+      <div class="skill-col rv">
+        <h4>Tools &amp; Practice</h4>
+        <ul>
+          <li>Docker <span>containerisation</span></li>
+          <li>GitHub Actions <span>CI/CD</span></li>
+          <li>Regression testing <span>386 assertions</span></li>
+          <li>Data security <span>AES-256-GCM / PII redaction</span></li>
+          <li>Git / Linux</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="about">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="sec-no">三</span>
+      <h2 class="sec-title">About<small>PROFILE</small></h2>
+    </div>
+    <div class="about-grid">
+      <div class="rv">
+        <p>Hi, I'm <strong>Bob</strong>. I believe good engineering is <strong>restrained</strong> — remove everything unnecessary, and what remains stands on its own. This site was built on that idea.</p>
+        <p>I care more about <strong>shipping</strong> than demos: quota fuses, retries, human review gates, regression tests — the unglamorous parts that keep AI systems running reliably in the real world often matter more than the model itself.</p>
+        <p>I'm Bob, a software engineer based in New Zealand. I spent five years in IT operations — running Linux servers, repairing hardware to component level, and closing 1,800+ support cases — before completing a Master's in Applied Computing, specialising in software and database development, at Lincoln University.</p>
+        <p>Now I design and ship AI products end to end, from idea to production. The parts I care about most are the unglamorous ones: retries, quota fuses, human review gates, regression tests — whatever it takes to keep a system running reliably for real users.</p>
+      </div>
+      <div class="rv">
+        <figure class="portrait">
+          <span class="hanko big">作</span>
+          <figcaption>YOUR PHOTO</figcaption>
+        </figure>
+        <dl class="facts">
+        <div class="fact"><dt>NAME</dt><dd>Bob</dd></div>
+        <div class="fact"><dt>ROLE</dt><dd>AI Engineer</dd></div>
+        <div class="fact"><dt>BASE</dt><dd>New Zealand</dd></div>
+        <div class="fact"><dt>LANG</dt><dd>Chinese / English</dd></div>
+        <div class="fact"><dt>SITE</dt><dd>flowgt.co.nz</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="contact">
+  <div class="wrap">
+    <div class="sec-head rv" style="justify-content:center;">
+      <span class="sec-no">四</span>
+      <h2 class="sec-title">Contact<small>HELLO</small></h2>
+    </div>
+    <div class="contact rv">
+      <p class="cn-sub">Have an idea? Let's talk.</p>
+      <a class="mail-big" href="mailto:bozheng.nz@gmail.com">bozheng.nz@gmail.com</a>
+      <p>Job opportunities, collaborations, or just chatting about shipping AI — all welcome.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 BOB</span>
+    <span><span class="hanko" style="width:20px;height:20px;font-size:12px;">作</span></span>
+    <span>MINIMAL — UI67</span>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lb-close" id="lbClose" aria-label="Close">×</button>
+  <img id="lbImg" src="" alt="">
+  <div class="lb-cap" id="lbCap"></div>
+  <a class="lb-visit" id="lbVisit" href="#" target="_blank" rel="noopener" style="display:none">VISIT SITE ↗</a>
+</div>
+
+<script>
+  const btn = document.getElementById('menuBtn');
+  const links = document.getElementById('navLinks');
+  btn.addEventListener('click', () => links.classList.toggle('open'));
+
+  // Smooth-scroll nav: driven by JS so it works even where default
+  // anchor jumps are intercepted (e.g. in-app file previews).
+  const goTo = (id) => {
+    const target = id === '#top' ? document.body : document.querySelector(id);
+    if (!target) return false;
+    if (id === '#top') window.scrollTo({top: 0, behavior: 'smooth'});
+    else target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    try { history.replaceState(null, '', id === '#top' ? ' ' : id); } catch (e) {}
+    return true;
+  };
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', e => {
+    if (goTo(a.getAttribute('href'))) { e.preventDefault(); links.classList.remove('open'); }
+  }));
+  document.querySelector('.brand').addEventListener('click', e => {
+    e.preventDefault(); goTo('#top'); links.classList.remove('open');
+  });
+
+  // Scrollspy: highlight the section currently in view
+  const spyLinks = [...links.querySelectorAll('a')];
+  const spy = new IntersectionObserver(es => es.forEach(en => {
+    if (en.isIntersecting) {
+      spyLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id));
+    }
+  }), {rootMargin: '-40% 0px -55% 0px'});
+  ['works', 'skills', 'about', 'contact'].forEach(id => {
+    const t = document.getElementById(id);
+    if (t) spy.observe(t);
+  });
+
+  // Lightbox: click a work image to enlarge; "Visit site" appears when a link exists
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbCap = document.getElementById('lbCap');
+  const lbVisit = document.getElementById('lbVisit');
+  document.querySelectorAll('.work-shot').forEach(f => f.addEventListener('click', () => {
+    const img = f.querySelector('img');
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+    lbCap.textContent = f.dataset.title || '';
+    if (f.dataset.link) { lbVisit.href = f.dataset.link; lbVisit.style.display = ''; }
+    else { lbVisit.style.display = 'none'; }
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }));
+  const closeLb = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
+  document.getElementById('lbClose').addEventListener('click', closeLb);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+  }), {threshold: .1});
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
