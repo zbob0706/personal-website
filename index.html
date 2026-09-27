@@ -87,8 +87,22 @@
   .work-bullets li::before{content:"—";position:absolute;left:0;color:var(--faint);}
   .work-bullets li b{color:var(--ink);font-weight:500;}
 
-  /* ---------- skills ---------- */
-  .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;}
+  /* ---------- work links ---------- */
+  .work-links{display:flex;gap:12px;margin:20px 0 6px;flex-wrap:wrap;}
+  .work-links a{font-family:var(--mono);font-size:11px;letter-spacing:.2em;border:1px solid var(--rule);border-radius:100px;padding:9px 22px;transition:.25s;color:var(--ink);}
+  .work-links a:hover{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  .work-links a.primary{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  .work-links a.primary:hover{background:var(--shu);border-color:var(--shu);}
+
+  /* ---------- stack grid ---------- */
+  .sub-label{font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:var(--faint);margin:0 0 22px;text-transform:uppercase;}
+  .stack-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:60px;}
+  .stack-cell{border:1px solid var(--rule);border-radius:6px;background:var(--paper2);padding:22px 8px 18px;display:flex;flex-direction:column;align-items:center;gap:13px;transition:.25s;}
+  .stack-cell:hover{border-color:var(--ink);transform:translateY(-3px);}
+  .stack-cell img{width:30px;height:30px;object-fit:contain;}
+  .stack-cell span{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--muted);text-align:center;line-height:1.5;}
+  .practice-row{display:flex;flex-wrap:wrap;gap:10px;}
+  .practice-row span{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted);border:1px solid var(--rule);border-radius:100px;padding:7px 15px;}
   .skill-col h4{font-family:var(--mono);font-size:12px;letter-spacing:.3em;color:var(--muted);font-weight:500;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--rule);text-transform:uppercase;}
   .skill-col ul{list-style:none;}
   .skill-col li{padding:8px 0;font-size:14.5px;letter-spacing:.02em;color:var(--ink);}
@@ -102,6 +116,8 @@
   .fact{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule);font-size:13.5px;}
   .fact dt{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--faint);white-space:nowrap;}
   .fact dd{color:var(--ink);text-align:right;letter-spacing:.04em;}
+  .fact dd a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);transition:.25s;}
+  .fact dd a:hover{border-color:var(--ink);}
 
   /* ---------- contact ---------- */
   .contact{text-align:center;padding:40px 0 20px;}
@@ -147,7 +163,7 @@
     .v-text{display:none;}
     .work-block{grid-template-columns:1fr;gap:12px;}
     .work-side{padding-top:0;}
-    .skills-grid{grid-template-columns:1fr;gap:36px;}
+    .stack-grid{grid-template-columns:repeat(3,1fr);gap:10px;}
     .about-grid{grid-template-columns:1fr;gap:48px;}
     section.block{padding:88px 0;}
   }
@@ -195,6 +211,7 @@
           <img src="assets/flowgt.jpg" alt="FlowGT project cover illustration">
         </figure>
         <h3><a href="https://flowgt.co.nz" target="_blank" rel="noopener">FlowGT · AI Job-Matching Platform</a><span class="status-tag">Live</span></h3>
+        <div class="work-links"><a class="primary" href="https://flowgt.co.nz" target="_blank" rel="noopener">VISIT LIVE SITE ↗</a></div>
         <p class="work-pos"><strong>In one line:</strong> a New Zealand AI job platform I founded and built solo from 0 to 1 — serving a paying member community.</p>
         <div class="work-tags"><span>JavaScript</span><span>Cloudflare Workers / D1 / Workers AI</span><span>DeepSeek API</span><span>Amazon Lex</span><span>AWS Lambda</span><span>GitHub Actions</span></div>
         <ul class="work-bullets">
@@ -225,10 +242,11 @@
     <article class="work-block rv">
       <div class="work-side">○ In development</div>
       <div class="work-body">
-        <figure class="work-shot rv" data-title="RepairIQ · AI Repair Diagnosis &amp; Quoting Tool">
+        <figure class="work-shot rv" data-title="RepairIQ · AI Repair Diagnosis &amp; Quoting Tool" data-link="https://github.com/zbob0706/repair-diagnosis-tool" data-visit-label="VIEW CODE ↗">
           <img src="assets/repairiq.jpg" alt="RepairIQ project cover illustration">
         </figure>
-        <h3>RepairIQ · AI Repair Diagnosis &amp; Quoting Tool<span class="status-tag dev">In development</span></h3>
+        <h3><a href="https://github.com/zbob0706/repair-diagnosis-tool" target="_blank" rel="noopener">RepairIQ · AI Repair Diagnosis &amp; Quoting Tool</a><span class="status-tag dev">In development</span></h3>
+        <div class="work-links"><a href="https://github.com/zbob0706/repair-diagnosis-tool" target="_blank" rel="noopener">SOURCE CODE ↗</a></div>
         <p class="work-pos"><strong>In one line:</strong> an AI diagnosis and quoting tool grounded in real repair cases — describe the fault, get a structured diagnosis and a repair quote.</p>
         <div class="work-tags"><span>Node.js / Express</span><span>SQLite</span><span>Qwen / OpenAI / Gemini</span><span>RAG</span><span>SSE</span><span>Docker</span></div>
         <ul class="work-bullets">
@@ -265,37 +283,24 @@
       <span class="sec-no">二</span>
       <h2 class="sec-title">Skills<small>STACK</small></h2>
     </div>
-    <div class="skills-grid">
-      <div class="skill-col rv">
-        <h4>AI · LLM</h4>
-        <ul>
-          <li>LLM app development <span>Qwen / OpenAI / Gemini / DeepSeek</span></li>
-          <li>Structured output <span>JSON Schema</span></li>
-          <li>Retrieval augmentation <span>RAG / BM25</span></li>
-          <li>Prompt engineering <span>CoT / cache tuning</span></li>
-          <li>AI cost &amp; quota control <span>fuses / ledgers</span></li>
-        </ul>
-      </div>
-      <div class="skill-col rv">
-        <h4>Engineering</h4>
-        <ul>
-          <li>JavaScript <span>Cloudflare Workers / D1</span></li>
-          <li>Node.js <span>Express / SQLite</span></li>
-          <li>Python <span>Playwright / data pipelines</span></li>
-          <li>REST API design <span>35+ endpoints</span></li>
-          <li>Serverless architecture <span>edge</span></li>
-        </ul>
-      </div>
-      <div class="skill-col rv">
-        <h4>Tools &amp; Practice</h4>
-        <ul>
-          <li>Docker <span>containerisation</span></li>
-          <li>GitHub Actions <span>CI/CD</span></li>
-          <li>Regression testing <span>386 assertions</span></li>
-          <li>Data security <span>AES-256-GCM / PII redaction</span></li>
-          <li>Git / Linux</li>
-        </ul>
-      </div>
+    <div class="sub-label rv">Technologies</div>
+    <div class="stack-grid">
+      <div class="stack-cell rv"><img src="https://cdn.simpleicons.org/python/0C0C09" alt="Python" loading="lazy"><span>Python</span></div>
+      <div class="stack-cell rv"><img src="https://cdn.simpleicons.org/javascript/0C0C09" alt="JavaScript" loading="lazy"><span>JavaScript</span></div>
+      <div class="stack-cell rv"><img src="https://cdn.simpleicons.org/nodedotjs/0C0C09" alt="Node.js" loading="lazy"><span>Node.js</span></div>
+      <div class="stack-cell rv"><img src="https://cdn.simpleicons.org/cplusplus/0C0C09" alt="C++" loading="lazy"><span>C++</span></div>
+      <div class="stack-cell rv"><img src="https://cdn.simpleicons.org/cloudflare/0C0C09" alt="Cloudflare" loading="lazy"><span>Cloudflare Workers</span></div>
+      <div class="stack-cell rv"><img src="https://cdn.simpleicons.org/sqlite/0C0C09" alt="SQLite" loading="lazy"><span>SQLite</span></div>
+      <div class="stack-cell rv"><img src="https://cdn.simpleicons.org/docker/0C0C09" alt="Docker" loading="lazy"><span>Docker</span></div>
+      <div class="stack-cell rv"><img src="https://cdn.simpleicons.org/githubactions/0C0C09" alt="GitHub Actions" loading="lazy"><span>GitHub Actions</span></div>
+      <div class="stack-cell rv"><img src="https://cdn.simpleicons.org/linux/0C0C09" alt="Linux" loading="lazy"><span>Linux</span></div>
+      <div class="stack-cell rv"><img src="https://cdn.simpleicons.org/git/0C0C09" alt="Git" loading="lazy"><span>Git</span></div>
+      <div class="stack-cell rv"><img src="https://cdn.simpleicons.org/googlegemini/0C0C09" alt="Google Gemini" loading="lazy"><span>Gemini</span></div>
+      <div class="stack-cell rv"><img src="https://cdn.simpleicons.org/deepseek/0C0C09" alt="DeepSeek" loading="lazy"><span>DeepSeek</span></div>
+    </div>
+    <div class="sub-label rv">AI &amp; engineering practices</div>
+    <div class="practice-row rv">
+      <span>RAG / BM25</span><span>JSON Schema</span><span>Prompt engineering</span><span>Quota fuses</span><span>Regression testing</span><span>PII redaction</span><span>REST API design</span><span>Playwright</span><span>AWS Lambda</span><span>OpenAI API</span><span>Qwen</span><span>Serverless edge</span>
     </div>
   </div>
 </section>
@@ -324,6 +329,7 @@
         <div class="fact"><dt>BASE</dt><dd>New Zealand</dd></div>
         <div class="fact"><dt>LANG</dt><dd>Chinese / English</dd></div>
         <div class="fact"><dt>SITE</dt><dd>flowgt.co.nz</dd></div>
+        <div class="fact"><dt>GITHUB</dt><dd><a href="https://github.com/zbob0706" target="_blank" rel="noopener">github.com/zbob0706</a></dd></div>
         </dl>
       </div>
     </div>
@@ -403,7 +409,7 @@
     lbImg.src = img.src;
     lbImg.alt = img.alt;
     lbCap.textContent = f.dataset.title || '';
-    if (f.dataset.link) { lbVisit.href = f.dataset.link; lbVisit.style.display = ''; }
+    if (f.dataset.link) { lbVisit.href = f.dataset.link; lbVisit.textContent = f.dataset.visitLabel || 'VISIT SITE ↗'; lbVisit.style.display = ''; }
     else { lbVisit.style.display = 'none'; }
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
