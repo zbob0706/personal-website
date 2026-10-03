@@ -132,6 +132,11 @@
   /* ---------- work images ---------- */
   .work-shot{margin:0 0 30px;border:1px solid var(--rule);border-radius:6px;overflow:hidden;cursor:zoom-in;background:var(--paper2);position:relative;}
   .work-shot img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;transition:transform .6s ease;}
+  .work-shot-video{background:#0C0C09;display:flex;justify-content:center;align-items:center;cursor:pointer;}
+  .work-shot-video video{height:560px;max-height:72vh;width:auto;max-width:100%;object-fit:contain;display:block;}
+  .play-badge{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:66px;height:66px;border-radius:50%;background:rgba(12,12,9,.7);color:#F6F2E9;display:flex;align-items:center;justify-content:center;font-size:20px;pointer-events:none;transition:.25s;z-index:2;}
+  .work-shot:hover .play-badge{background:var(--shu);transform:translate(-50%,-50%) scale(1.08);}
+  .lightbox video{max-width:min(480px,92vw);max-height:76vh;border-radius:6px;background:#000;box-shadow:0 24px 80px rgba(0,0,0,.4);}
   .work-shot:hover img{transform:scale(1.03);}
   .work-shot::after{content:"VIEW";position:absolute;right:14px;bottom:12px;font-family:var(--mono);font-size:10px;letter-spacing:.28em;color:var(--paper);background:rgba(12,12,9,.72);padding:7px 14px;border-radius:100px;opacity:0;transition:opacity .3s;}
   .work-shot:hover::after{opacity:1;}
@@ -163,6 +168,7 @@
     .v-text{display:none;}
     .work-block{grid-template-columns:1fr;gap:12px;}
     .work-side{padding-top:0;}
+    .work-shot-video video{height:440px;}
     .stack-grid{grid-template-columns:repeat(3,1fr);gap:10px;}
     .about-grid{grid-template-columns:1fr;gap:48px;}
     section.block{padding:88px 0;}
@@ -225,16 +231,18 @@
     <article class="work-block rv">
       <div class="work-side"><span class="live">● Live</span><br>PB Tech store</div>
       <div class="work-body">
-        <figure class="work-shot rv" data-title="Bella Pro · Retail Marketing Robot">
-          <img src="assets/bella.jpg" alt="Bella Pro project cover illustration">
+        <figure class="work-shot work-shot-video rv" data-title="Bella Pro · Retail Marketing Robot — live order-picking demo" data-video="assets/bella-pro-demo.mp4">
+          <video src="assets/bella-pro-demo.mp4" poster="assets/bella.jpg" muted loop playsinline autoplay preload="metadata" aria-label="Bella Pro robot order-picking demo video"></video>
+          <span class="play-badge" aria-hidden="true">▶</span>
         </figure>
         <h3>Bella Pro · Retail Marketing Robot<span class="status-tag">Live</span></h3>
-        <p class="work-pos"><strong>In one line:</strong> turned a Bella Pro service robot at a PB Tech store into a marketing and guided-selling terminal, built on the Pudu Cloud OpenAPI.</p>
+        <p class="work-pos"><strong>In one line:</strong> turned a Bella Pro service robot at a PB Tech store into a marketing, guided-selling and order-fulfilment terminal, built on the Pudu Cloud OpenAPI.</p>
         <div class="work-tags"><span>Python</span><span>Playwright</span><span>SQLite</span><span>Pudu Cloud OpenAPI</span><span>C++20</span><span>Claude Code Skill</span></div>
         <ul class="work-bullets">
           <li>Built HMAC-SHA1 signed-request SDKs (<b>Python and C++</b>) covering ad management, patrol routes, and map points on the robot cloud API.</li>
           <li>Scraped live promotions (SKU, price, image, end date) with a real Playwright browser to get past Akamai bot protection.</li>
           <li>Built a generate → human-review → upload ad pipeline (dry-run by default to prevent misfires); published <b>44</b> scan-to-buy QR-code promo ads and mapped <b>28</b> shelf points; packaged the workflow as a reusable agent skill.</li>
+          <li>Shipped the order-on-robot flow now running live in store: customers search, add to cart and place an order on the robot's screen — the robot drives itself to the warehouse, staff pick the items, and it delivers them to the cashier for pay &amp; collect, tracked by order number.</li>
         </ul>
       </div>
     </article>
@@ -358,9 +366,10 @@
   </div>
 </footer>
 
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Media viewer">
   <button class="lb-close" id="lbClose" aria-label="Close">×</button>
   <img id="lbImg" src="" alt="">
+  <video id="lbVideo" controls playsinline preload="metadata" style="display:none"></video>
   <div class="lb-cap" id="lbCap"></div>
   <a class="lb-visit" id="lbVisit" href="#" target="_blank" rel="noopener" style="display:none">VISIT SITE ↗</a>
 </div>
@@ -399,22 +408,35 @@
     if (t) spy.observe(t);
   });
 
-  // Lightbox: click a work image to enlarge; "Visit site" appears when a link exists
+  // Lightbox: click a work cover to enlarge; plays video when the cover is a video
   const lb = document.getElementById('lightbox');
   const lbImg = document.getElementById('lbImg');
+  const lbVideo = document.getElementById('lbVideo');
   const lbCap = document.getElementById('lbCap');
   const lbVisit = document.getElementById('lbVisit');
   document.querySelectorAll('.work-shot').forEach(f => f.addEventListener('click', () => {
-    const img = f.querySelector('img');
-    lbImg.src = img.src;
-    lbImg.alt = img.alt;
+    if (f.dataset.video) {
+      lbVideo.src = f.dataset.video;
+      lbVideo.style.display = '';
+      lbImg.style.display = 'none';
+      lbVideo.play().catch(() => {});
+    } else {
+      const img = f.querySelector('img');
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      lbImg.style.display = '';
+      lbVideo.style.display = 'none';
+      lbVideo.pause();
+      lbVideo.removeAttribute('src');
+      lbVideo.load();
+    }
     lbCap.textContent = f.dataset.title || '';
     if (f.dataset.link) { lbVisit.href = f.dataset.link; lbVisit.textContent = f.dataset.visitLabel || 'VISIT SITE ↗'; lbVisit.style.display = ''; }
     else { lbVisit.style.display = 'none'; }
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
   }));
-  const closeLb = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
+  const closeLb = () => { lb.classList.remove('open'); document.body.style.overflow = ''; lbVideo.pause(); };
   document.getElementById('lbClose').addEventListener('click', closeLb);
   lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
